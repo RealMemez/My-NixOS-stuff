@@ -97,8 +97,9 @@
   programs.zsh.enable = true;
   programs.sway.enable = true;
   programs.xwayland.enable = true;
+  programs.hyprland.enable = true;
 
-
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -106,7 +107,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    vlc
     wget
     htop
     neofetch
@@ -130,6 +132,30 @@
     nitrogen
     rofi
     vscode
+    polybar
+    cava
+    pipes
+    krabby
+    neovim
+    vimPlugins.nvchad
+    vimPlugins.nvchad-ui
+    vscode
+    # |HYPRLAND| #
+    hyprpaper
+    hyprland
+    pywal
+    lxappearance
+    pamixer
+    wofi
+    kitty
+    waybar
+    flameshot
+    cliphist
+    dunst
+    zathura
+    swaylock-effects
+    eww
+    # ---|HYPRLAND|--- #
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
