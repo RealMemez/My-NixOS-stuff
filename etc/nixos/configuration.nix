@@ -11,8 +11,14 @@
     ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable = false;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub = {
+  	enable = true;
+	device = "nodev";
+	useOSProber = true;
+};
+  
 
   networking.hostName = "nixxy"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -28,7 +34,7 @@
   time.timeZone = "Asia/Kolkata";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_IN";
+  i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_IN";
@@ -41,17 +47,16 @@
     LC_TELEPHONE = "en_IN";
     LC_TIME = "en_IN";
   };
+  
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # Enable the X11 windowing system.
+  # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
-  services.picom.enable = true;
 
-  # Enable the XFCE Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.xfce.enable = true;
-  services.xserver.windowManager = {
-	i3.enable = true;
-};
+  # Enable the KDE Plasma Desktop Environment.
+  services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -84,22 +89,20 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.memezz = {
     isNormalUser = true;
-    description = "RealMemezz";
+    description = "memezz";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
+      kdePackages.kate
     #  thunderbird
     ];
     shell = pkgs.zsh;
   };
 
-  # Install sys programs
+  # Install firefox.
   programs.firefox.enable = true;
-  programs.zsh.enable = true;
-  programs.sway.enable = true;
-  programs.xwayland.enable = true;
-  programs.hyprland.enable = true;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  # Install ZSH
+  programs.zsh.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -107,55 +110,33 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    #vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    vlc
+    neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
-    htop
-    neofetch
-    picom
-    i3status
-    i3blocks
-    i3lock-color
-    termite
-    mpv
-    feh
-    dmenu
     git
-    wine
-    ulauncher
-    alacritty
-    xdg-desktop-portal
-    ark
-    oh-my-zsh
+    fd
+    fzf
     zsh
-    starship
-    nitrogen
-    rofi
-    vscode
-    polybar
-    cava
-    pipes
+    zoxide
+    eza 
+    bat
+    vlc
+    thunderbird
+    tmux
+    libgcc
+    zig
+    python314
+    cargo
+    nodejs_23
+    ripgrep
+    gnumake
+    zip
+    unzip
     krabby
-    neovim
-    vimPlugins.nvchad
-    vimPlugins.nvchad-ui
-    vscode
-    # |HYPRLAND| #
-    hyprpaper
-    hyprland
-    pywal
-    lxappearance
-    pamixer
-    wofi
-    kitty
-    waybar
-    flameshot
-    cliphist
-    dunst
-    zathura
-    swaylock-effects
-    eww
-    # ---|HYPRLAND|--- #
+    pokemonsay
+    fortune
+    alacritty
+    ueberzugpp
+    yazi-unwrapped
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
